@@ -25,3 +25,6 @@ var/
 
 # Dev
 venv
+
+*.ncu-rep
+*.swp
