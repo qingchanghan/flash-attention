@@ -104,3 +104,7 @@ void matrix_transpose_cuda_v5(const T* input, T* output, const int rows,
 template <typename T>
 void matrix_transpose_cuda_v6(const T* input, T* output, const int rows,
                               const int cols, cudaStream_t stream);
+
+template <typename T>
+void reduce_sum_cuda_v0(const T* input, T* output, const int rows,
+                        const int cols, cudaStream_t stream);

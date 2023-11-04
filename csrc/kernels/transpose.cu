@@ -10,6 +10,8 @@
 #include "cuda_utils.h"
 #include "kernels.h"
 
+namespace {
+
 // v0: naive 实现
 template <typename T>
 __global__ void matrix_transpose_ker_v0(const T* input, T* output,
@@ -260,6 +262,8 @@ __global__ void matrix_transpose_ker_v6(const T* input, T* output,
     }
   }
 }
+
+}  // namespace
 
 template <typename T>
 void matrix_transpose_cuda_v0(const T* input, T* output, const int rows,

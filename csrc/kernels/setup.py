@@ -116,6 +116,7 @@ ext_modules.append(
         sources=[
             "kernels_api.cpp",
             "transpose.cu",
+            "reduce.cu",
         ],
         extra_compile_args={
             "cxx": ["-O3"] + generator_flag,
