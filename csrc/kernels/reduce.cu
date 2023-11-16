@@ -7,35 +7,11 @@
 #include <cfloat>
 #include <limits>
 
+#include "common.cuh"
 #include "cuda_utils.h"
 #include "kernels.h"
 
 namespace {
-
-template <typename T>
-__device__ T warp_reduce_sum(T val) {
-#pragma unroll
-  for (int mask = 16; mask > 0; mask >>= 1) {
-    val = val + __shfl_xor_sync(0xffffffff, val, mask, 32);
-  }
-  return val;
-}
-
-template <typename T>
-__device__ T block_reduce_sum(T val) {
-  static __shared__ T shm[32];
-  int lane_id = threadIdx.x & 0x1f;
-  int warp_id = threadIdx.x >> 5;
-
-  val = warp_reduce_sum<T>(val);
-  if (lane_id == 0) {
-    shm[warp_id] = val;
-  }
-  __syncthreads();
-  val = shm[lane_id];
-  val = warp_reduce_sum<T>(val);
-  return val;
-}
 
 template <typename T>
 __global__ void reduce_sum_ker_v0(const T* input, T* output, const int rows,
@@ -53,7 +29,6 @@ __global__ void reduce_sum_ker_v0(const T* input, T* output, const int rows,
     output[row_idx] = local_sum;
   }
 }
-
 }  // namespace
 
 template <typename T>

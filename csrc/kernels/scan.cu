@@ -7,12 +7,9 @@
 #include <cfloat>
 #include <limits>
 
+#include "common.cuh"
 #include "cuda_utils.h"
 #include "kernels.h"
-
-#define WARP_SIZE 32
-#define BLOCK_SIZE 1024
-#define WARP_NUM (BLOCK_SIZE / WARP_SIZE)
 
 namespace {
 

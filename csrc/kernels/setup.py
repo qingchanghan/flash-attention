@@ -118,6 +118,7 @@ ext_modules.append(
             "transpose.cu",
             "reduce.cu",
             "scan.cu",
+            "softmax.cu",
         ],
         extra_compile_args={
             "cxx": ["-O3"] + generator_flag,

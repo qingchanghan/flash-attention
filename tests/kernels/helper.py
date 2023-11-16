@@ -88,6 +88,9 @@ class TestDecorator(object):
             dtypes = self.dtypes
         if not versions:
             versions = ["v0"]
+        if use_ncu:
+            ntest = 1
+            nrepeat = 1
 
         def decorator(func):
             self.all_case[func.__name__] = (

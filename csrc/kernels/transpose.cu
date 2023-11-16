@@ -7,6 +7,7 @@
 #include <cfloat>
 #include <limits>
 
+#include "common.cuh"
 #include "cuda_utils.h"
 #include "kernels.h"
 
