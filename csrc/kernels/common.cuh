@@ -201,7 +201,7 @@ __inline__ __device__ T block_reduce_sum(T val) {
   __syncthreads();
 
   if (warp_id == 0) {
-    val = shm[lane_id];
+    val = threadIdx.x < blockDim.x / 32.f ? shm[lane_id] : 0.f;
     val = warp_reduce_sum<T>(val);
   }
   return val;
@@ -229,7 +229,7 @@ __inline__ __device__ T block_reduce_max(T val) {
   __syncthreads();
 
   if (warp_id == 0) {
-    val = shm[lane_id];
+    val = threadIdx.x < blockDim.x / 32.f ? shm[lane_id] : 0.f;
     val = warp_reduce_max<T>(val);
   }
   return val;

@@ -11,7 +11,7 @@ kt = TestDecorator()
 # @kt.case(dtypes=[torch.half], versions=["v0", "v1"], atol=1e-3, rtol=1e-3, ntest=1)
 # @kt.case(dtypes=[torch.half], versions=["v1"], atol=1e-3, rtol=1e-3, ntest=1)
 # @kt.case(dtypes=[torch.half], versions=["v1", "v2"], atol=1e-3, rtol=1e-3, ntest=1)
-@kt.case(dtypes=[torch.half], versions=["v2"], atol=1e-3, rtol=1e-3, ntest=1)
+@kt.case(dtypes=[torch.float], versions=["v0", "v1", "v2"], atol=1e-3, rtol=1e-3, ntest=1)
 def test_softmax(version="v0"):
     # rows = 16384
     # cols = 16384
@@ -37,8 +37,8 @@ def test_softmax(version="v0"):
     print(f"rows={rows}, cols={cols}")
 
     inp = kt.rand((rows, cols))
-    inp_np = inp.detach().cpu().numpy()
-    inp_of = flow.tensor(inp_np).cuda()
+    # inp_np = inp.detach().cpu().numpy()
+    # inp_of = flow.tensor(inp_np).cuda()
 
     def custom():
         output = softmax(

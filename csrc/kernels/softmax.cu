@@ -154,7 +154,7 @@ __global__ void softmax_ker_v2(const T* input, T* output, const int rows,
 #pragma unroll
     for (int j = 0; j < N; j++) {
       buf[i * N + j] = tmp[j];
-      local_max = max(val_max, tmp[j]);
+      local_max = max(local_max, tmp[j]);
     }
   }
 
@@ -166,6 +166,7 @@ __global__ void softmax_ker_v2(const T* input, T* output, const int rows,
   __syncthreads();
 
   local_max = val_max;
+
   float local_sum = 0.f;
 #pragma unroll
   for (int i = threadIdx.x; i < cols; i += blockDim.x) {
@@ -182,6 +183,7 @@ __global__ void softmax_ker_v2(const T* input, T* output, const int rows,
   __syncthreads();
 
   local_sum = val_sum;
+
 #pragma unroll
   for (int i = threadIdx.x; i < num_packs; i += blockDim.x) {
     T tmp[N];
